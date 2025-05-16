@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <title>UniVLA: A Unified Vision-Language-Action Model with Adaptive Reasoning</title>
+        <title>OneTwoVLA: A Unified Vision-Language-Action Model with Adaptive Reasoning</title>
         <link rel="icon" type="image/x-icon" href="/static/img/icons/thu_logo.png">
 
         <meta charset="utf-8">
@@ -38,71 +38,67 @@
         <div class="header-wrapper">
             <div class="header-container" id="header-container">
                 <div class="header-content">
-                    <h2 style="margin-top: 0px"><i>UniVLA</i>: A Unified Vision-Language-Action<br>Model with Adaptive Reasoning</h2>
+                    <h2 style="margin-top: 0px"><i>OneTwoVLA</i>: A Unified Vision-Language-<br>Action Model with Adaptive Reasoning</h2>
                     <!-- <h2>A Fully Open, <i>Vision-Centric</i><br>
                         Exploration of Multimodal LLMs</h2> -->
                         <p>
-                            Introducing UniVLA, a single unified model capable of both <em><strong>reasoning</strong></em> and <em><strong>acting</strong></em>, and can <em><strong>adaptively</strong></em> switch between two modes. 
-                            <!-- To further unlock UniVLA's reasoning and generalization ablity, we design a scalable pipeline for synthesizing embodied reasoning-centric vision-language data, used for co-training with robot data. -->
-                            <!-- Co-training with our synthetic embodied reasoning centric vision-language data further improves UniVLA's reasoning and generalization ability. -->
-                            UniVLA demonstrates superior performance in the following capabilities:
+                            Introducing OneTwoVLA, a single unified model capable of both <em><strong>reasoning</strong></em> and <em><strong>acting</strong></em>, and can <em><strong>adaptively</strong></em> switch between two modes. 
+                            <!-- To further unlock OneTwoVLA's reasoning and generalization ablity, we design a scalable pipeline for synthesizing embodied reasoning-centric vision-language data, used for co-training with robot data. -->
+                            <!-- Co-training with our synthetic embodied reasoning centric vision-language data further improves OneTwoVLA's reasoning and generalization ability. -->
+                            OneTwoVLA demonstrates superior performance in the following capabilities:
                         </p>
 
                         <div class="icon-container">
                             <div class="icon-item">
                                 <img src="./static/img/icons/long.svg" alt="Visual Representation Icon">
-                                <div><strong>Long-horizon Task Planning</strong>: UniVLA reasons to formulate, track, and dynamically adjust task plans based on execution feedback. Moreover, Co-training with our syhthetic embodied-reasoning centric vision-language data enables UniVLA to demonstrate generalizable planning capabilities on unseen tasks.</div>
+                                <div><strong>Long-horizon Task Planning</strong>: OneTwoVLA reasons to formulate, track, and dynamically adjust task plans based on execution feedback. Moreover, Co-training with our syhthetic embodied-reasoning centric vision-language data enables OneTwoVLA to demonstrate generalizable planning capabilities on unseen tasks.</div>
                             </div>
                             <div class="icon-item">
                                 <img src="./static/img/icons/error.svg" alt="Connector Design Icon">
-                                <div><strong>Error Detection and Recovery</strong>: UniVLA detects execution errors in real time,
+                                <div><strong>Error Detection and Recovery</strong>: OneTwoVLA detects execution errors in real time,
                                     reasons about corrective strategies, and performs agile recovery actions.</div>
                             </div>
                             <div class="icon-item">
                                 <img src="./static/img/icons/human.svg" alt="Instruction Tuning Data Icon">
-                                <div><strong>Natural Human-Robot Interaction</strong>: UniVLA adjusts actions immediately upon human intervention and proactively seeks clarification when faced with ambiguity.</div>
+                                <div><strong>Natural Human-Robot Interaction</strong>: OneTwoVLA adjusts actions immediately upon human intervention and proactively seeks clarification when faced with ambiguity.</div>
                             </div>
                             <div class="icon-item">
                                 <img src="./static/img/icons/visual.svg" alt="Instruction Tuning Recipes Icon">
-                                <div><strong>Generalizable visual grounding</strong>: UniVLA exhibits
+                                <div><strong>Generalizable visual grounding</strong>: OneTwoVLA has
                                     superior understanding of spatial relationships, object attributes, and semantic features, genealizing to unseen objects.</div>
                             </div>
                         </div>
 
-                    <div class="button-container">
-                        <!-- replace arxiv -->
+                    <!-- <div class="button-container">
                         <a href="https://arxiv.org/abs/2406.16860" class="button paper-link" target="_blank">
                             <span class="icon is-small">
                                 <i class="ai ai-arxiv"></i>
                             </span>
                             arXiv
                         </a>
-                        <!-- replace pdf -->
                         <a href="https://arxiv.org/pdf/2406.16860" class="button paper-link" target="_blank">
                             <span class="icon is-small">
                                 <i class="fas fa-file-pdf"></i>
                             </span>
                             <span>pdf</span>
                         </a>
-                        <!-- replace image -->
                         <a href="https://github.com/cambrian-mllm/cambrian" class="button" target="_blank">
                             <span class="icon is-small">
                                 <i class="fab fa-github"></i>
                             </span>
                             <span>Code</span>
                         </a>
-                        <!-- <br> -->
                         <a href="https://huggingface.co/collections/nyu-visionx/cambrian-data-6667ce801e179b4fbe774e11" class="button" target="_blank">
                             <span class="icon is-small">
                                 <img src="./static/img/icons/huggingface_logo.svg" alt="Hugging Face logo" style="height: 1em;">
                             </span>
                             <span>Data</span>
                         </a>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="header-image">
                     <!-- <img draggable="false" src="static/img/cambrian.png" alt="Teaser Image" class="teaser-image"> -->
-                    <video id="teaser" controls autoplay loop muted style="width: 100%;box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, .1); border-radius: .75rem;">
+                    <video id="teaser" controls autoplay loop style="width: 100%;box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, .1); border-radius: .75rem;">
                         <source src="./static/videos/teaser.mp4" type="video/mp4">
                       </video>
                 </div>
@@ -120,7 +116,7 @@
                     <a href="" class="author-link" target="_blank">Junming Zhao<sup>1,4</sup></a> &emsp;
                     <a href="https://yang-gao.weebly.com/" class="author-link" target="_blank">Yang Gao<sup>1,2,3,5&dagger;</sup></a>
                 </p>
-                <p style="font-size: 1rem"><sup>1</sup>Tsinghua University, <sup>2</sup>Shanghai AI Lab, <sup>3</sup>Shanghai Qi Zhi Institute, <sup>4</sup>Fudan University, <sup>5</sup>Spirit AI</p>
+                <p style="font-size: 1rem"><sup>1</sup>Tsinghua University, <sup>2</sup>Shanghai Qi Zhi Institute, <sup>3</sup>Shanghai AI Lab, <sup>4</sup>Fudan University, <sup>5</sup>Spirit AI</p>
                 <p style="text-align: center; margin-bottom: 0;">
                     <span class="author-note"><sup>*</sup>Project lead</span>&emsp;
                     <span class="author-note"><sup>&dagger;</sup>Corresponding author</span>
@@ -167,12 +163,9 @@
 
                     <p class="text">
                         <p class="text">
-                            UniVLA excels at handling long-horizon manipulation tasks. It consistently demonstrates the ability to understand the physical scene, generate correct plans, track task progress accurately, and produce precise actions. This allows UniVLA to successfully complete challenging tasks such as hotpot cooking, tomato-egg scramble, and cocktail mixing.
+                            OneTwoVLA excels at handling long-horizon manipulation tasks. It consistently demonstrates the ability to understand the physical scene, generate correct plans, track task progress accurately, and produce precise actions. This allows OneTwoVLA to successfully complete challenging tasks such as hotpot cooking, tomato-egg scramble, and cocktail mixing.
                         </p>
-                        <p class="text">
-                            Moreover, Co-training with our synthetic embodied-reasoning centric vision-language data enables UniVLA to demonstrate generalizable planning capabilities on unseen tasks.
-                        <!-- <strong>Who's answering: LLM or MLLM?:</strong> We compare performance between vision-disabled and vision-enabled settings across MLLMs trained with 23 different vision backbones. Our findings reveal that some benchmarks such as MMMU and AI2D are less reliant on visual inputs, whereas others such as MMVP and MME experience significant performance declines, indicating their effective evaluation of multimodality</li> -->
-                        </p>
+                        
                     </p>
 
                     <div style="display: flex; align-items: center; margin: 0 0 15px -20%">
@@ -218,7 +211,9 @@
                           <source src="static/videos/long-horizon/cocktail/mount.mp4" type="video/mp4">
                         </video>
                     </div>
-
+                    <p class="text">
+                        Moreover, Co-training with our synthetic embodied-reasoning centric vision-language data enables OneTwoVLA to demonstrate generalizable planning capabilities on unseen tasks.
+                    </p>
                     <div style="display: flex; align-items: center; margin: 10px 0 15px -20%">
                         <h3 style="margin-right: 0.5em; margin-bottom: 0.3%; margin-top: 0;">Generalizable Planning Tasks</h3>
                         <select id="generalize-selection" onchange="SelectGeneralizeVideo()">
@@ -246,7 +241,7 @@
 
                     <p class="text">
                         <p class="text">
-                            Recovering from mistakes is a critical capability for general-purpose robots. UniVLA can
+                            Recovering from mistakes is a critical capability for general-purpose robots. OneTwoVLA can
                             detect errors in real-time, rapidly reason about recovery strategies, and subsequently generate corrective actions.
                         </p>
                     </p>
@@ -276,7 +271,7 @@
 
                     <p class="text">
                         <p class="text">
-                            To deploy robots in human-centric scenarios, the ability to interact naturally with humans is indispensable. Due to its adaptive nature and explicit reasoning process, UniVLA is able to engage with humans in a natural way — seamlessly handling human interventions and proactively seek clarification when faced with ambiguities.
+                            To deploy robots in human-centric scenarios, the ability to interact naturally with humans is indispensable. Due to its adaptive nature and explicit reasoning process, OneTwoVLA is able to engage with humans in a natural way — seamlessly handling human interventions and proactively seek clarification when faced with ambiguities.
                         </p>
                     </p>
 
@@ -305,7 +300,7 @@
 
                     <p class="text">
                         <p class="text">
-                            Co-training UniVLA with our synthetic embodied reasoning-centric vision-language data endows it with open-world visual grounding capabilities, enabling it to effectively comprehend spatial relationships, object attributes, and semantic features, even for objects unseen during training (e.g., GoPro, Sprite, Starbucks Coffee).
+                            Co-training OneTwoVLA with our synthetic embodied reasoning-centric vision-language data endows it with open-world visual grounding capabilities, enabling it to effectively comprehend spatial relationships, object attributes, and semantic features, even for objects unseen during training (e.g., GoPro, Sprite, Starbucks Coffee).
                         </p>
                     </p>
 
@@ -347,7 +342,7 @@
 
                     <p class="text">
                         <p class="text">
-                            To further unlock UniVLA's reasoning and generalization capabilities, we design a <strong>scalable</strong>, <strong>automatic</strong> pipeline for synthesizing <strong>embodied reasoning</strong> centric vision-language data without any artificial intervention, used for co-training with robot data. The task instructions for each synthetic image are categorized into two types: visual grounding tasks and long-horizon planning tasks. We show some examples here:
+                            To further unlock OneTwoVLA's reasoning and generalization capabilities, we design a <strong>scalable</strong>, <strong>automatic</strong> pipeline for synthesizing <strong>embodied reasoning</strong> centric vision-language data without any artificial intervention, used for co-training with robot data. The task instructions for each synthetic image are categorized into two types: visual grounding tasks and long-horizon planning tasks. We show some examples here:
                         </p>
                     </p>
 
@@ -420,7 +415,7 @@
         </div>
         <hr style="width: 100%; margin-top: 40px; margin-bottom: 0px">
         </d-article>
-        <d-appendix style="margin-top:0%;margin-left: 7.8%; border-top: none;">
+        <!-- <d-appendix style="margin-top:0%;margin-left: 7.8%; border-top: none;">
             <h3 id="bib-text">BibTeX</h3>
             <p class="bibtex" style="margin-left: -7.8%">
                 @article{tong2024cambrian,<br>
@@ -430,7 +425,7 @@
                 &nbsp;&nbsp;year={2024}<br>
                 }
             </p>
-        </d-appendix>
+        </d-appendix> -->
         <!-- bibliography will be inlined during Distill pipeline's pre-rendering -->
         <d-bibliography src="bibliography.bib"></d-bibliography>
         <script src="./static/js/nav-bar.js"></script>
