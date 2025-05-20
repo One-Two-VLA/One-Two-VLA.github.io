@@ -1,0 +1,653 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>OneTwoVLA: A Unified Vision-Language-Action Model with Adaptive Reasoning</title>
+        <link rel="icon" type="image/x-icon" href="/static/img/icons/thu_logo.png">
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <script src="./static/js/distill_template.v2.js"></script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+        <script src="https://d3js.org/d3.v5.min.js"></script>
+        <script src="https://d3js.org/d3-collection.v1.min.js"></script>
+        <script src="https://rawgit.com/nstrayer/slid3r/master/dist/slid3r.js"></script>
+
+        <script defer="" src="./static/js/hider.js"></script>
+        <script src="./static/js/image_interact.js"></script>
+        <script src="./static/js/switch_videos.js"></script>
+
+        <link rel="stylesheet" href="./static/css/style.css">
+        <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css" integrity="sha384-yFRtMMDnQtDRO8rLpMIKrtPCD5jdktao2TV19YiZYWMDkUR5GQZR/NOVTdquEx1j" crossorigin="anonymous">
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.js" integrity="sha384-9Nhn55MVVN0/4OFx7EE5kpFBPsEMZxKTCnA+4fqDmg12eCTqGi6+BB2LjY8brQxJ" crossorigin="anonymous"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+            onload="renderMathInElement(document.body);"></script>
+        <script defer src="./static/js/fontawesome.all.min.js"></script>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+        <script defer src="./static/js/medium-zoom.min.js"></script>
+        <script defer src="./static/js/zoom.js"></script>
+    </head>
+    <body>
+        <div class="header-wrapper">
+            <div class="header-container" id="header-container">
+                <div class="header-content">
+                    <h2 style="margin-top: 0px"><i>OneTwoVLA</i>: A Unified Vision-Language-<br>Action Model with Adaptive Reasoning</h2>
+                    <!-- <h2>A Fully Open, <i>Vision-Centric</i><br>
+                        Exploration of Multimodal LLMs</h2> -->
+                        <p>
+                            Introducing OneTwoVLA, a single unified model capable of both <em><strong>reasoning</strong></em> and <em><strong>acting</strong></em>, and can <em><strong>adaptively</strong></em> switch between two modes. 
+                            <!-- To further unlock OneTwoVLA's reasoning and generalization ablity, we design a scalable pipeline for synthesizing embodied reasoning-centric vision-language data, used for co-training with robot data. -->
+                            <!-- Co-training with our synthetic embodied reasoning centric vision-language data further improves OneTwoVLA's reasoning and generalization ability. -->
+                            OneTwoVLA demonstrates superior performance in the following capabilities:
+                        </p>
+
+                        <div class="icon-container">
+                            <div class="icon-item">
+                                <img src="./static/img/icons/long.svg" alt="Visual Representation Icon">
+                                <div><strong>Long-horizon Task Planning</strong>: OneTwoVLA reasons to formulate, track, and dynamically adjust task plans based on execution feedback. Moreover, Co-training with our syhthetic embodied-reasoning centric vision-language data enables OneTwoVLA to demonstrate generalizable planning capabilities on unseen tasks.</div>
+                            </div>
+                            <div class="icon-item">
+                                <img src="./static/img/icons/error.svg" alt="Connector Design Icon">
+                                <div><strong>Error Detection and Recovery</strong>: OneTwoVLA detects execution errors in real time,
+                                    reasons about corrective strategies, and performs agile recovery actions.</div>
+                            </div>
+                            <div class="icon-item">
+                                <img src="./static/img/icons/human.svg" alt="Instruction Tuning Data Icon">
+                                <div><strong>Natural Human-Robot Interaction</strong>: OneTwoVLA adjusts actions immediately upon human intervention and proactively seeks clarification when faced with ambiguity.</div>
+                            </div>
+                            <div class="icon-item">
+                                <img src="./static/img/icons/visual.svg" alt="Instruction Tuning Recipes Icon">
+                                <div><strong>Generalizable visual grounding</strong>: OneTwoVLA has
+                                    superior understanding of spatial relationships, object attributes, and semantic features, genealizing to unseen objects.</div>
+                            </div>
+                        </div>
+
+                    <div class="button-container">
+                        <a href="https://arxiv.org/abs/2505.11917" class="button paper-link" target="_blank">
+                            <span class="icon is-small">
+                                <i class="ai ai-arxiv"></i>
+                            </span>
+                            arXiv
+                        </a>
+                        <a href="https://arxiv.org/pdf/2505.11917" class="button paper-link" target="_blank">
+                            <span class="icon is-small">
+                                <i class="fas fa-file-pdf"></i>
+                            </span>
+                            <span>pdf</span>
+                        </a>
+                        <a href="https://github.com/Fanqi-Lin/OneTwoVLA" class="button" target="_blank">
+                            <span class="icon is-small">
+                                <i class="fab fa-github"></i>
+                            </span>
+                            <span>Code</span>
+                        </a>
+                        <a href="https://huggingface.co/datasets/Richard-Nai/onetwovla-dataset" class="button" target="_blank">
+                            <span class="icon is-small">
+                                <img src="./static/img/icons/huggingface_logo.svg" alt="Hugging Face logo" style="height: 1em;">
+                            </span>
+                            <span>Data</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="header-image">
+                    <video id="teaser" controls autoplay loop style="width: 100%;box-shadow: 0px 0px 15px 5px rgba(0, 0, 0, .1); border-radius: .75rem;">
+                        <source src="./static/videos/teaser.mp4" type="video/mp4">
+                      </video>
+                </div>
+            </div>
+        </div>
+    <d-article>
+        <div class="byline">
+            <div class="byline-container">
+                <p>
+                    <a href="https://fanqi-lin.github.io/" class="author-link" target="_blank">Fanqi Lin<sup>1,2,3,5*</sup></a> &emsp;
+                    <a href="https://scholar.google.com/citations?user=I0HLZAwAAAAJ&hl=zh-CN&oi=ao/" class="author-link" target="_blank">Ruiqian Nai<sup>1,2,3,5*</sup></a> &emsp;
+                    <a href="https://yingdong-hu.github.io/" class="author-link" target="_blank">Yingdong Hu<sup>1,2,3*</sup></a> &emsp;
+                    <br>
+                    <a href="https://scholar.google.com/citations?user=FiP-TVUAAAAJ" style="margin-left:-16pt;" class="author-link" target="_blank">Jiacheng You<sup>1,2,3</sup></a> &emsp;
+                    <a href="" class="author-link" target="_blank">Junming Zhao<sup>1,4</sup></a> &emsp;
+                    <a href="https://yang-gao.weebly.com/" class="author-link" target="_blank">Yang Gao<sup>1,2,3,5&dagger;</sup></a>
+                </p>
+                <p style="font-size: 1rem"><sup>1</sup>Tsinghua University, <sup>2</sup>Shanghai Qi Zhi Institute, <sup>3</sup>Shanghai AI Lab, <sup>4</sup>Fudan University, <sup>5</sup>Spirit AI</p>
+                <p style="text-align: center; margin-bottom: 0;">
+                    <span class="author-note"><sup>*</sup>Equal Contribution</span>&emsp;
+                    <span class="author-note"><sup>&dagger;</sup>Corresponding author</span>
+                </p>
+            </div>
+        </div>
+
+
+        <div class="icon-row" style="margin-left:-10%;">
+            <a href="#long-horizon" class="icon-link">
+                <img src="static/img/icons/long.svg" alt="Visual Representation Logo" class="icon">
+                Long-Horizon<br>Task Planning
+            </a>
+            <a href="#error-detection-recovery" class="icon-link">
+                <img src="static/img/icons/error.svg" alt="Connector Logo" class="icon">
+                Error Detection<br>and Recovery
+            </a>
+            <a href="#human-robot" class="icon-link">
+                <img src="static/img/icons/human.svg" alt="Data Logo" class="icon">
+                Human-Robot<br>Interaction
+            </a>
+            <a href="#open-world-visual" class="icon-link">
+                <img src="static/img/icons/visual.svg" alt="Recipe Logo" class="icon">
+                Generalizable<br>Visual Grounding
+            </a>
+            <a href="#vl-data" class="icon-link">
+                <img src="static/img/icons/eval.svg" alt="Eval Logo" class="icon">
+                Synthetic Vision<br>Language Data
+            </a>
+        </div>
+        <!-- <div style="border-bottom: 1px solid rgba(0, 0, 0, 0.1); padding-bottom: 20px"> -->
+            <p class="click-hint" style="width: 85%; ">
+                <img src="static/img/icons/click.gif" style="width: 1.5rem">
+                <strong>Click to jump to each section.</strong>
+            </p>
+        <!-- </div> -->
+
+        <hr style="width: 100%; margin-top: 20px; margin-bottom: 15px">
+
+        <div id='long-horizon' class="vision-block">
+
+            <div id="sec:long-horizon" class="sub-section">
+                <h1 class="text" style="margin-bottom:25px;">Long-Horizon Task Planning</h1>
+
+                    <p class="text">
+                        <p class="text">
+                            OneTwoVLA excels at handling long-horizon manipulation tasks. It consistently demonstrates the ability to understand the physical scene, generate correct plans, track task progress accurately, and produce precise actions. This allows OneTwoVLA to successfully complete challenging tasks such as hotpot cooking, tomato-egg scramble, and cocktail mixing.
+                        </p>
+                        
+                    </p>
+
+                    <div style="display: flex; align-items: center; margin: 0 0 15px -20%">
+                        <h3 style="margin-right: 0.5em; margin-bottom: 0.3%; margin-top: 0;">Hotpot Cooking</h3>
+                        <select id="hotpot-selection" onchange="SelectHotpotVideo()">
+                          <option value="mushroom_1">Dip beef and enoki mushrooms (Trial 1)</option>
+                          <option value="mushroom_2">Dip beef and enoki mushrooms (Trial 2)</option>
+                          <option value="mushroom_3">Dip beef and enoki mushrooms (Trial 3)</option>
+                          <option value="green_1">Dip beef and green bok choy (Trial 1)</option>
+                          <option value="green_2">Dip beef and green bok choy (Trial 2)</option>
+                          <option value="green_3">Dip beef and green bok choy (Trial 3)</option>
+                        </select>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: center; ">
+                        <video id="hotpot-video" width="140%" controls autoplay loop muted style="box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, .1); border-radius: .75rem; margin-bottom: 1em;">
+                          <source src="static/videos/long-horizon/hotpot/mushroom_1.mp4" type="video/mp4">
+                        </video>
+                    </div>
+
+                    <div style="display: flex; align-items: center; margin: 10px 0 15px -20%">
+                        <h3 style="margin-right: 0.5em; margin-bottom: 0.2%; margin-top: 0;">Tomato-Egg Scramble</h3>
+                        <select id="tomato-selection" onchange="SelectTomatoVideo()">
+                          <option value="1">Tomato-Egg (Trial 1)</option>
+                          <option value="2">Tomato-Egg (Trial 2)</option>
+                        </select>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: center; ">
+                        <video id="tomato-video" width="140%" controls autoplay loop muted style="box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, .1); border-radius: .75rem; margin-bottom: 1em;">
+                          <source src="static/videos/long-horizon/tomato/1.mp4" type="video/mp4">
+                        </video>
+                    </div>
+
+                    <div style="display: flex; align-items: center; margin: 10px 0 15px -20%">
+                        <h3 style="margin-right: 0.5em; margin-bottom: 0.3%; margin-top: 0;">Cocktail Mixing</h3>
+                        <select id="cocktail-selection" onchange="SelectCocktailVideo()">
+                            <option value="mount">Mount Fuji</option>
+                            <option value="mojito">Mojito</option>
+                            <option value="vodka">Vodka Sunrise</option>
+                        </select>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: center; ">
+                        <video id="cocktail-video" width="140%" controls autoplay loop muted style="box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, .1); border-radius: .75rem; margin-bottom: 1em;">
+                          <source src="static/videos/long-horizon/cocktail/mount.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <p class="text">
+                        Moreover, Co-training with our synthetic embodied-reasoning centric vision-language data enables OneTwoVLA to demonstrate generalizable planning capabilities on unseen tasks.
+                    </p>
+                    <div style="display: flex; align-items: center; margin: 10px 0 15px -20%">
+                        <h3 style="margin-right: 0.5em; margin-bottom: 0.3%; margin-top: 0;">Generalizable Planning Tasks</h3>
+                        <select id="generalize-selection" onchange="SelectGeneralizeVideo()">
+                            <option value="cola">Get Icy Cola</option>
+                            <option value="grape">Empty Plate</option>
+                            <option value="tool">Creative Tool Use</option>
+                            <option value="coffee">Refreshing Coffee</option>
+                            <option value="kale">Healthy Kale Juice</option>
+                            <option value="blue">Blue Mood Cocktail</option>
+                        </select>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: center; ">
+                        <video id="generalize-video" width="140%" controls autoplay loop muted style="box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, .1); border-radius: .75rem; margin-bottom: 1em;">
+                          <source src="static/videos/generalizable_planning/cola.mp4" type="video/mp4">
+                        </video>
+                    </div>
+            </div>
+
+        </div>
+
+        <hr style="width: 100%; margin-top: 20px; margin-bottom: 15px">
+        <div id='error-detection-recovery' class="vision-block">
+            <div id="sec:error-detection-recovery" class="sub-section">
+                <h1 class="text" style="margin-bottom:25px;">Error Detection and Recovery</h1>
+
+                    <p class="text">
+                        <p class="text">
+                            Recovering from mistakes is a critical capability for general-purpose robots. OneTwoVLA can
+                            detect errors in real-time, rapidly reason about recovery strategies, and subsequently generate corrective actions.
+                        </p>
+                    </p>
+
+                    <div style="display: flex; align-items: center; margin: 0 0 15px -20%">
+                        <p style="margin-right: 0.5em; margin-bottom: 0.2%; margin-top: 0; font-size:1.2rem">Show recovery for</p>
+                        <!-- Show recovery example for -->
+                        <select id="error-selection" onchange="SelectErrorVideo()">
+                            <option value="hotpot_1">Hotpot (Trial 1)</option>
+                            <option value="hotpot_2">Hotpot (Trial 2)</option>
+                            <option value="tomato_1">Tomato-Egg (Trial 1)</option>
+                            <option value="tomato_2">Tomato-Egg (Trial 2)</option>
+                        </select>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: center; ">
+                        <video id="error-video" width="140%" controls autoplay loop muted style="box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, .1); border-radius: .75rem; margin-bottom: 1em;">
+                          <source src="static/videos/error/hotpot_1.mp4" type="video/mp4">
+                        </video>
+                    </div>
+            </div>
+        </div>
+
+        <hr style="width: 100%; margin-top: 20px; margin-bottom: 15px">
+        <div id='human-robot' class="vision-block">
+            <div id="sec:human-robot" class="sub-section">
+                <h1 class="text" style="margin-bottom:25px;">Natural Human-Robot Interaction</h1>
+
+                    <p class="text">
+                        <p class="text">
+                            To deploy robots in human-centric scenarios, the ability to interact naturally with humans is indispensable. Due to its adaptive nature and explicit reasoning process, OneTwoVLA is able to engage with humans in a natural way — seamlessly handling human interventions and proactively seek clarification when faced with ambiguities.
+                        </p>
+                    </p>
+
+                    <div style="display: flex; align-items: center; margin: 0 0 15px -20%">
+                        <p style="margin-right: 0.5em; margin-bottom: 0.2%; margin-top: 0; font-size:1.2rem">Show interaction for</p>
+                        <select id="interaction-selection" onchange="SelectInteractionVideo()">
+                            <option value="mojito">Mojito</option>
+                            <option value="vodka">Vodka Sunrise</option>
+                            <option value="hotpot_1">Hotpot (Trial 1)</option>
+                            <option value="hotpot_2">Hotpot (Trial 2)</option>
+                          </select>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: center; ">
+                        <video id="interaction-video" width="140%" controls autoplay loop muted style="box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, .1); border-radius: .75rem; margin-bottom: 1em;">
+                          <source src="static/videos/interaction/mojito.mp4" type="video/mp4">
+                        </video>
+                    </div>
+            </div>
+        </div>
+
+        
+        <hr style="width: 100%; margin-top: 20px; margin-bottom: 15px">
+        <div id='open-world-visual' class="vision-block">
+            <div id="sec:open-world-visual" class="sub-section">
+                <h1 class="text" style="margin-bottom:25px;">Open-World Visual Grounding</h1>
+
+                    <p class="text">
+                        <p class="text">
+                            Co-training OneTwoVLA with our synthetic embodied reasoning-centric vision-language data endows it with open-world visual grounding capabilities, enabling it to effectively comprehend spatial relationships, object attributes, and semantic features, even for objects unseen during training (e.g., GoPro, Sprite, Starbucks Coffee). The following videos demonstrate our robot successfully reaching to target objects based on language instructions.
+                        </p>
+                    </p>
+
+                    <div style="display: flex; align-items: center; margin: 0 0 15px -20%">
+                        <!-- <h3 style="margin-right: 0.5em; margin-bottom: 0.3%; margin-top: 0;">Hotpot Cooking</h3> -->
+                        <select id="env-selection" style="margin-right: 1.5%" onchange="SelectTestVideo()">
+                            <option value="env1">Env 1 (Glass Table)</option>
+                            <option value="env2">Env 2 (Timber Bench)</option>
+                            <option value="env3">Env 3 (Round Platform)</option>
+                            <option value="env4">Env 4 (Wooden Podium)</option>
+                            <option value="env5">Env 5 (Meeting Room)</option>
+                            <option value="env6">Env 6 (Stone Seat)</option>
+                            <option value="env7">Env 7 (Workstaion)</option>
+                            <option value="env8">Env 8 (Two Chairs)</option>
+                        </select>
+                        <select id="reference-type-selection" style="margin-right: 1.5%" onchange="SelectTestVideo()">
+                            <option value="spatial">Spatial Relationship</option>
+                            <option value="attribute">Object Attribute</option>
+                            <option value="semantic">Semantic Feature</option>
+                            <option value="direct">Direct Name</option>
+                        </select>
+                        <button id="shuffle-video" style="height: 5%;">
+                            <img src="static/img/icons/shuffle.svg" alt="Visual Representation Logo" class="icon" style="width:11pt; height: 10pt; margin-bottom:0; margin-top: -2.2pt" >
+                            <span>Shuffle</span>
+                        </button>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: center; ">
+                        <video id="test-video" width="140%" controls autoplay loop muted style="box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, .1); border-radius: .75rem; margin-bottom: 1em;">
+                          <source src="static/videos/open_world/env1/spatial.mp4" type="video/mp4">
+                        </video>
+                    </div>
+            </div>
+        </div>
+
+        <hr style="width: 100%; margin-top: 20px; margin-bottom: 15px">
+        <div id='vl-data' class="vision-block">
+            <div id="sec:vl-data" class="sub-section">
+                <h1 class="text" style="margin-bottom:25px;">Synthetic Vision-Language Data Examples</h1>
+
+                    <p class="text">
+                        <p class="text">
+                            To further unlock OneTwoVLA's reasoning and generalization capabilities, we design a <strong>scalable</strong>, <strong>automatic</strong> pipeline for synthesizing <strong>embodied reasoning</strong> centric vision-language data without any artificial intervention, used for co-training with robot data. The task instructions for each synthetic image are categorized into two types: visual grounding tasks and long-horizon planning tasks. We show some examples here:
+                        </p>
+                    </p>
+
+                    <div id="fig_div" style="display: flex; margin-left: -20%;">
+                        <div style="flex: 1; display: flex; align-items: flex-start; padding-right: 0%; width: 50%">
+                          <div style="display: flex; flex-direction: column; align-items: flex-start">
+                            <div style="display: flex; align-items: center; margin-bottom: 0.7em">
+                              <h3 style="margin: 0; margin-right: 0em; min-width: 170px; margin-bottom: 0.3%;">Visual Grounding</h3>
+                              <select id="vl-data-left" onchange="SelectVLVisual()">
+                                <option value="1">Winter Scene</option>
+                                <option value="2">Painting Desk</option>
+                                <option value="3">Plant Care</option>
+                                <option value="4">Beach Table</option>
+                                <option value="5">Sewing Scenario</option>
+                                <option value="6">Moss Stone</option>
+                                <option value="7">Seaside Wood</option>
+                                <option value="8"> Balcony Work</option>
+                              </select>
+                            </div>
+                            <div style="display: flex; align-items: flex-start;">
+                              <img id="vl-image-left" src="static/img/visual_grounding/1.png" alt="Visual Grounding Image" style="width: 30%; box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, .1); border-radius: .75rem; margin-bottom: 4%;">
+                              <div style="display: flex; flex-direction: column; margin-left: 0.6em; width: 38%;">
+                                <div style="border: 2px solid #48a9a6; border-radius: 15px; padding: 6px; margin-bottom: 6px; box-shadow: 0px 0px 4px 1px rgba(72, 169, 166, .2);line-height:1.0em; font-size: 1rem; padding-right: 0px;">   
+                                    <span style="color:#48a9a6">Spatial Instruction: </span><span id="vl-example-spatial-1">Can you grab the item draped over the left edge of the table?</span><br><span style="color:#48a9a6">Reasoning: </span><span id="vl-example-spatial-2">I need to pick up the brown knitted scarf which provides warmth.</span></div>
+                                <div style="border: 2px solid #65b5f6; border-radius: 15px; padding: 6px; margin-bottom: 6px; box-shadow: 0px 0px 4px 1px rgba(101, 181, 246, .2);line-height:1.0em; font-size: 1rem; padding-right: 0;"><span style="color:#65b5f6">Attribute Instruction: </span><span id="vl-example-attribute-1">Hand me the glass sphere decoration.</span><br><span style="color:#65b5f6">Reasoning: </span><span id="vl-example-attribute-2">I need to pick up the snow globe ornament containing a Christmas tree behind the book.</span></div>
+                                <div style="border: 2px solid #dc7276; border-radius: 15px; padding: 6px; box-shadow: 0px 0px 4px 1px rgba(220, 114, 118, .2);line-height:1.0em; font-size: 1rem; padding-right: 0;"> <span style="color:#dc7276">Semantic Instruction: </span><span id="vl-example-semantic-1">I'd like something to read, please pass me that.</span><br><span style="color:#dc7276">Reasoning: </span><span id="vl-example-semantic-2">I need to pick up the book on the right side of the table.</span></div>
+                                
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div style="flex: 1; display: flex; align-items: flex-start;margin-left: -16%">
+                          <div style="display: flex; flex-direction: column; align-items: flex-start;">
+                            <div style="display: flex; align-items: center; margin-bottom: 0.7em;">
+                              <h3 style="margin: 0; margin-right: 0em; min-width: 225px; margin-bottom: 0.3%;">Long-Horizon Planning</h3>
+                              <select id="vl-data-right" onchange="SelectVLPlan()">
+                                <option value="1">Make Salad</option>
+                                <option value="2">Prepare sandwich</option>
+                                <option value="3">Deliver Map</option>
+                                <option value="4">Brew Tea</option>
+                                <option value="5">Shop Groceries</option>
+                                <option value="6">First Aid</option>
+                                <option value="7">Clear Table</option>
+                                <option value="8">Craft Sushi</option>
+                              </select>
+                            </div>
+                            <div style="display: flex; align-items: flex-start;">
+                              <img id="vl-image-right" src="static/img/planning/1.png" alt="Long-Horizon Planning Image" style="width: 30%; box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, .1); border-radius: .75rem;">
+                              <div id="vl-example-plan-box" style="border: 2px solid #ffa500; border-radius: 15px; padding: 6px; margin-bottom: 6px; box-shadow: 0px 0px 4px 1px rgba(72, 169, 166, .2);line-height:1em; font-size: 1rem; width: 25%;margin-left: 0.6em; padding-right: 3px; margin-bottom: 0;"> <span style="color:#ffa500">Instruction: </span><span id="vl-example-plan-1">Prepare a fresh salad using the ingredients on the table.</span><span style="color:#ffa500"><br>Reasoning Plan: </span><span id="vl-example-plan-2">1. Pour the cherry tomatoes into the large wooden bowl. 2. Pour the arugula into the large wooden bowl. 3. Add some sliced cucumbers to the large wooden bowl. 4. Take the croutons and sprinkle them evenly on top of the salad. 5. Pour olive oil over the salad. 6. gently toss the ingredients together.</span></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+            </div>
+        </div>
+
+        <hr style="width: 100%; margin-top: 20px; margin-bottom: 15px">
+        <div id='hardware' class="vision-block">
+            <div id="sec:hardware" class="sub-section">
+                <h1 class="text" style="margin-bottom:40px;">Hardware</h1>
+                <d-figure id="fig-cvcb" >
+                    <figure style="margin:0; margin-left: 8%">
+                        <img id="hardware_img" data-zoomable="" draggable="false" src="static/img/cropped_hardware_setup.png" alt="benchmark category" class="medium-zoom-image">
+                        <!-- <figcaption>
+                            <strong>Figure 2:</strong> Example questions in CV-Bench that focuses on 2D and 3D visual understanding.
+                        </figcaption> -->
+                    </figure>
+                </d-figure>
+            </div>
+        </div>
+        <hr style="width: 100%; margin-top: 40px; margin-bottom: 0px">
+        </d-article>
+        <d-appendix style="margin-top:0%;margin-left: 7.8%; border-top: none;">
+            <h3 id="bib-text">BibTeX</h3>
+            <p class="bibtex" style="margin-left: -7.8%; margin-top: -0.8%">
+
+                @misc{lin2025onetwovlaunifiedvisionlanguageactionmodel,<br>
+                    &nbsp;&nbsp;title={OneTwoVLA: A Unified Vision-Language-Action Model with Adaptive Reasoning},<br>
+                    &nbsp;&nbsp;author={Fanqi Lin and Ruiqian Nai and Yingdong Hu and Jiacheng You and Junming Zhao and Yang Gao},<br>
+                    &nbsp;&nbsp;year={2025},<br>
+                    &nbsp;&nbsp;eprint={2505.11917},<br>
+                    &nbsp;&nbsp;archivePrefix={arXiv},<br>
+                    &nbsp;&nbsp;primaryClass={cs.RO},<br>
+                    &nbsp;&nbsp;url={https://arxiv.org/abs/2505.11917},<br>
+                }
+            </p>
+        </d-appendix>
+        <!-- bibliography will be inlined during Distill pipeline's pre-rendering -->
+        <d-bibliography src="bibliography.bib"></d-bibliography>
+        <script src="./static/js/nav-bar.js"></script>
+        <script>
+
+            function SelectVLVisual() {
+              var vl_id = document.getElementById("vl-data-left").value;
+              var spatial_instruction = document.getElementById("vl-example-spatial-1");
+              var spatial_reasoning = document.getElementById("vl-example-spatial-2");
+              var attribute_instruction = document.getElementById("vl-example-attribute-1");
+              var attribute_reasoning = document.getElementById("vl-example-attribute-2");
+              var semantic_instruction = document.getElementById("vl-example-semantic-1");
+              var semantic_reasoning = document.getElementById("vl-example-semantic-2");
+              var image = document.getElementById("vl-image-left");
+              image.src = "static/img/visual_grounding/" + vl_id + ".png";
+
+              if (vl_id === "1") {
+                spatial_instruction.textContent = "Can you grab the item draped over the left edge of the table?";
+                spatial_reasoning.textContent = "I need to pick up the brown knitted scarf which provides warmth.";
+                attribute_instruction.textContent = "Hand me the glass sphere decoration.";
+                attribute_reasoning.textContent = "I need to pick up the snow globe ornament containing a Christmas tree behind the book.";
+                semantic_instruction.textContent = "I'd like something to read, please pass me that.";
+                semantic_reasoning.textContent = "I need to pick up the book located on the right side of the table.";
+              } else if (vl_id === "2") {
+                spatial_instruction.textContent = "Get me the item that's on the wooden stand.";
+                spatial_reasoning.textContent = "I need to pick up the small rectangular painting sitting on the easel.";
+                attribute_instruction.textContent = "Please pass me the white, kidney-shaped item.";
+                attribute_reasoning.textContent = "I need to pick up the white ceramic paint palette in the front left area.";
+                semantic_instruction.textContent = "I need the tool used for drawing precise, fine lines with ink.";
+                semantic_reasoning.textContent = "I need to pick up the metal drafting pen, which is situated to the left of the palette.";
+              } else if (vl_id === "3") {
+                spatial_instruction.textContent = "Please grab the object situated to the right of the book.";
+                spatial_reasoning.textContent = "I need to pick up the straw hat positioned on the right side of the table.";
+                attribute_instruction.textContent = "Could you pass me the large metallic item?";
+                attribute_reasoning.textContent = "I need to pick up the grey watering can at the left side of the table.";
+                semantic_instruction.textContent = "I need the tool used for cutting small branches or stems.";
+                semantic_reasoning.textContent = "I need to pick up the pruning shears lying on the book.";
+              } else if (vl_id === "4") {
+                spatial_instruction.textContent = "Could you grab the item placed to the right of the hat and in front of the glass?";
+                spatial_reasoning.textContent = "I need to pick up the red book which is used for reading.";
+                attribute_instruction.textContent = "Please pass me the round, green item.";
+                attribute_reasoning.textContent = "I need to pick up the coconut on the right side of the table.";
+                semantic_instruction.textContent = "I want something to wear on my feet for walking on the sand.";
+                semantic_reasoning.textContent = "I need to pick up the pair of flip-flops at the front left of the table.";
+              } else if (vl_id === "5") {
+                spatial_instruction.textContent = "Can you give me the item at the right-front corner of the table?";
+                spatial_reasoning.textContent = "I need to pick up the ball of beige yarn.";
+                attribute_instruction.textContent = "Hand me the adjustable black item.";
+                attribute_reasoning.textContent = "I need to pick up the desk lamp to the right of the sewing machine.";
+                semantic_instruction.textContent = "I need the device used for stitching fabric together.";
+                semantic_reasoning.textContent = "I need to pick up the sewing machine, located in the back middle section of the table.";
+              } else if (vl_id === "6") {
+                spatial_instruction.textContent = "I need the item that's underneath the compass, notebook, and flute.";
+                spatial_reasoning.textContent = "I need to pick up the map spread out on the mossy surface.";
+                attribute_instruction.textContent = "Hand me the long, cylindrical item made of wood.";
+                attribute_reasoning.textContent = "I need to pick up the wooden flute lying across the top left.";
+                semantic_instruction.textContent = "Could you hand me the device that helps with navigation?";
+                semantic_reasoning.textContent = "I need to pick up the compass located on top of the map.";
+              } else if (vl_id === "7") {
+                spatial_instruction.textContent = "Could you grab the object to the left of the the compass?";
+                spatial_reasoning.textContent = "I need to pick up the open book located between the binoculars on the left and the compass on the right.";
+                attribute_instruction.textContent = "Please pass the brown, ceramic item.";
+                attribute_reasoning.textContent = "I need to pick up the brown mug positioned to the right back of the open book on the wooden table.";
+                semantic_instruction.textContent = "Hand me the device used for seeing things far away.";
+                semantic_reasoning.textContent = "I need to pick up the binoculars on the left back corner of the wooden table.";
+              } else if (vl_id === "8") {
+                spatial_instruction.textContent = "Please hand me the item at the back right corner of the table.";
+                spatial_reasoning.textContent = "I need to pick up the potted succulent plant.";
+                attribute_instruction.textContent = "Could you pass the item with the flaky texture?";
+                attribute_reasoning.textContent = "I need to pick up one of the croissants from the white plate.";
+                semantic_instruction.textContent = "Give me the item used for typing and accessing digital files.";
+                semantic_reasoning.textContent = "I need to pick up the silver laptop at the back of the table.";
+              }
+            }
+
+            function SelectVLPlan() {
+                var vl_id = document.getElementById("vl-data-right").value;
+                var instruction = document.getElementById("vl-example-plan-1");
+                var reasoning = document.getElementById("vl-example-plan-2");
+                var image = document.getElementById("vl-image-right");
+                image.src = "static/img/planning/" + vl_id + ".png";
+                vl_box = document.getElementById("vl-example-plan-box");
+                vl_box.style.width = "25%";
+
+                if (vl_id === "1") {
+                  instruction.textContent = "Prepare a fresh salad using the ingredients on the table.";
+                  reasoning.textContent = "1. Pour the cherry tomatoes into the large wooden bowl. 2. Pour the arugula into the large wooden bowl. 3. Add some sliced cucumbers to the large wooden bowl. 4. Take the croutons and sprinkle them evenly on top of the salad. 5. Pour olive oil over the salad. 6. gently toss the ingredients together.";
+                } else if (vl_id === "2") {
+                    instruction.textContent = "I'm hungry. Make me a peanut butter and jelly sandwich.";
+                    reasoning.textContent = "1. Pick up the knife and scoop peanut butter from the jar. 2. Spread the peanut butter evenly onto one slice of bread. 3. Wipe the knife clean with a napkin. 4. Pick up the knife and scoop jelly from another jar. 5. Spread the jelly evenly onto the peanut buttered slice of bread. 6. Wipe the knife clean with a napkin and place it down. 7. Pick up the other slice of bread and place it on top of the peanut butter and jelly covered bread.";
+                    vl_box.style.width = "32%";
+                } else if (vl_id === "3") {
+                    instruction.textContent = "I'm lost; please hand me the map.";
+                    reasoning.textContent = "1. Pick up the metal mug and place it to the side of the map. 2. Pick up the compass and place it on the stone. 3. Pick up the metallic pin and place it near the compass on the stone. 4. Pick up the map and hand it to the user.";
+                } else if (vl_id === "4") {
+                    instruction.textContent = "Could you please prepare a lovely cup of tea for me right here on the table?";
+                    reasoning.textContent = "1. Open the tea tin on the saucer. 2. Pick up the spoon and scoop some tea leaves from the tin. 3. Pour the tea leaves into the white mug and place the spoon back on the plate. 4. Close the lid of the tea tin. 5. Pour the hot water from the teapot into the white mug.";
+                } else if (vl_id === "5") {
+                    instruction.textContent = "Buy some ingredients from this market stall to make a delicious Mediterranean pizza.";
+                    reasoning.textContent = "1. Pick up the empty woven basket. 2. Select some ripe tomatoes and place them gently inside the basket. 3. Choose some firm zucchini and carefully add them to the basket. 4. Gather a bunch of kale and arrange it in the basket. 5. Take a few bright orange citrus fruits and set them in the basket. 6. Move the filled basket to the checkout area.";
+                    vl_box.style.width = "30%";
+                } else if (vl_id === "6") {
+                    instruction.textContent = "I cut myself with a knife and I'm bleeding, please get me a bandage.";
+                    reasoning.textContent = "1. Open the first aid kit. 2. Take out a bandage from the first aid kit. 3. Hand the bandage to the user. 4. Close the first aid kit.";
+                } else if (vl_id === "7") {
+                    instruction.textContent = "I need to work, please clear the table for me.";
+                    reasoning.textContent = "1. Gather all the puzzle pieces into a single pile on the green cloth. 2. Open the puzzle box. 3. Put the puzzle piece pile into the puzzle box. 3. Close the puzzle box. 4. Pick up the closed puzzle box and place it on the shelf. 5. Fold the green cloth. 6. Pick up the folded green cloth and place it on the shelf.";
+                } else if (vl_id === "8") {
+                    instruction.textContent = "Let's make some sushi with the ingredients we have on hand and then slice it up.";
+                    reasoning.textContent = "1. Spread the rice evenly over the nori sheet on the bamboo mat. 2. Place the cucumber slices on top of the rice. 3. Put the minced meat over the cucumber. 4. Use the bamboo mat to roll the sushi tightly. 5. Use the knife to cut the sushi roll into pieces.";
+                }
+            }
+
+            document.getElementById('shuffle-video').addEventListener('click', function() {
+              var envSelect = document.getElementById('env-selection');
+              var referencetypeSelect = document.getElementById('reference-type-selection');
+              randomizeSelect(envSelect);
+              randomizeSelect(referencetypeSelect);
+              console.log("Shuffle", envSelect.value, referencetypeSelect.value)
+              SelectTestVideo();
+            });
+          
+            function randomizeSelect(selectElement) {
+              var options = selectElement.options;
+              random_move = Math.random();
+              var randomIndex = Math.floor(Math.random() * options.length);
+              selectElement.selectedIndex = randomIndex;
+            }
+          
+            function SelectTestVideo() {
+              var env_id = document.getElementById("env-selection").value;
+              var reference_type = document.getElementById("reference-type-selection").value;
+              console.log("SelectTestVideo", env_id, reference_type)
+              var video = document.getElementById("test-video");
+              video.src = "static/videos/open_world/" + env_id + "/" + reference_type + ".mp4";
+              video.play();
+            }
+          
+            function SelectHotpotVideo() {
+              var hotpot_id = document.getElementById("hotpot-selection").value;
+              console.log("SelectHotpotVideo", hotpot_id)
+              var video = document.getElementById("hotpot-video");
+              video.src = "static/videos/long-horizon/hotpot/"  + hotpot_id + ".mp4";
+              video.play();
+            }
+          
+            function SelectTomatoVideo() {
+              var tomato_id = document.getElementById("tomato-selection").value;
+              console.log("SelectTomatoVideo", tomato_id)
+              var video = document.getElementById("tomato-video");
+              video.src = "static/videos/long-horizon/tomato/"  + tomato_id + ".mp4";
+              video.play();
+            }
+          
+            function SelectCocktailVideo() {
+              var cocktail_id = document.getElementById("cocktail-selection").value;
+              console.log("SelectCocktailVideo", cocktail_id)
+              var video = document.getElementById("cocktail-video");
+              video.src = "static/videos/long-horizon/cocktail/"  + cocktail_id + ".mp4";
+              video.play();
+            }
+          
+            function SelectErrorVideo() {
+              var error_id = document.getElementById("error-selection").value;
+              console.log("SelectErrorVideo", error_id)
+              var video = document.getElementById("error-video");
+              video.src = "static/videos/error/"  + error_id + ".mp4";
+              video.play();
+            }
+          
+            function SelectInteractionVideo() {
+              var interaction_id = document.getElementById("interaction-selection").value;
+              console.log("SelectInteractionVideo", interaction_id)
+              var video = document.getElementById("interaction-video");
+              video.src = "static/videos/interaction/"  + interaction_id + ".mp4";
+              video.play();
+            }
+          
+            function SelectGeneralizeVideo() {
+              var generalize_id = document.getElementById("generalize-selection").value;
+              console.log("SelectGeneralizeVideo", generalize_id)
+              var video = document.getElementById("generalize-video");
+              video.src = "static/videos/generalizable_planning/"  + generalize_id + ".mp4";
+              video.play();
+            }
+        </script>
+
+        <style>
+            #fig_div {
+                width: 200%
+            }
+
+            #hardware_img {
+                width: 60%;
+                margin-top: -2%;
+            }
+
+            #shuffle-video {
+                appearance: none;
+                padding: 0.5em 1em;
+                border: 1px solid #ccc;
+                border-radius: 15px;
+                background-color: #fff;
+                font-size: 0.95em;
+                color: #333;
+                cursor: pointer;
+                transition: border-color 0.2s ease;
+                padding: 8px 16px 8px 16px;
+                height: 50px;
+            }
+            #shuffle-video:hover {
+                border-color: #555;
+            }
+            #shuffle-video:focus{
+                outline: none;
+                border-color: #287775; /* 007bff */
+                box-shadow: 0 0 5px rgba(157, 209, 72, 0.5);
+            }
+        </style>
+    </body>
+</html>
+
